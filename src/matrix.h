@@ -98,6 +98,7 @@ void mprint(Matrix * matrix) {
 Matrix * matmul(Matrix * m1, Matrix * m2) {
     if (m1->col != m2->col || m1->col != m2->col) {
         perror("Matrix dimensions must be the same for matmul");
+        return NULL;
     }
 
     // Create the result matrix
@@ -124,6 +125,7 @@ Matrix * matmul(Matrix * m1, Matrix * m2) {
 float * row(Matrix * matrix, int row) {
     if (matrix->row < row) {
         perror("Invalid row number");
+        return NULL;
     }
 
     return matrix->data[row];
@@ -142,7 +144,8 @@ float * row(Matrix * matrix, int row) {
 float * col(Matrix * matrix, int col) {
     if (matrix->col < col) {
         perror("Invalid col number");
-    }
+        return NULL;
+    } 
     
     // Malloc
     float * mcol = (float *) malloc(matrix->row * sizeof(float)); 
@@ -150,6 +153,34 @@ float * col(Matrix * matrix, int col) {
         mcol[i] = matrix->data[i][col];
     }
     return mcol;
+}
+
+/**
+ * Function: arange
+ * -----------------
+ * Generate set of values ​​within a defined range
+ * 
+ * start: Initial value
+ * end: final value
+ * step: step where values ​​change
+ * 
+ * returns: array with generated values
+ */
+float * arange(int start, int end, int step) {
+    if (start >= end) {
+        perror("Start value must be less than end value");
+        return NULL;
+    }
+
+    float * marange = (float *) malloc(((start + end) / step) * sizeof(float));
+    
+    size_t idx = 0;
+    for (size_t i = start; i <= end; i += step) {
+        marange[idx] = i;
+
+        idx += 1;
+    }
+    return marange;
 }
 
 #endif
