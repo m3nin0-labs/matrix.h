@@ -111,4 +111,45 @@ Matrix * matmul(Matrix * m1, Matrix * m2) {
     return resultMatrix;
 }
 
+/**
+ * Function: row
+ * -----------------
+ * Retrieve a specific row from matrix
+ * 
+ * matrix: Matrix
+ * row: row number
+ * 
+ * returns: array with row values
+ */
+float * row(Matrix * matrix, int row) {
+    if (matrix->row < row) {
+        perror("Invalid row number");
+    }
+
+    return matrix->data[row];
+}
+
+/**
+ * Function: col
+ * -----------------
+ * Retrieve a specific col from matrix
+ * 
+ * matrix: Matrix
+ * col: col number
+ * 
+ * returns: array with col values
+ */
+float * col(Matrix * matrix, int col) {
+    if (matrix->col < col) {
+        perror("Invalid col number");
+    }
+    
+    // Malloc
+    float * mcol = (float *) malloc(matrix->row * sizeof(float)); 
+    for(int i = 0; i < matrix->row; i++) {
+        mcol[i] = matrix->data[i][col];
+    }
+    return mcol;
+}
+
 #endif
