@@ -277,4 +277,26 @@ Matrix * sdiagonalreverse(Matrix * matrix) {
     return mm;
 }
 
+/**
+ * Function: sum
+ * -----------------
+ * sum all elements of each column
+ * 
+ * matrix: Matrix
+ * 
+ * returns: vector with each column sum
+ */
+float * sum(Matrix * matrix) {
+    float * temp;
+    float * sumarray = (float *) malloc(sizeof(float) * matrix->col);
+
+    for(size_t i = 0; i < matrix->col; i++) {
+        temp = col(matrix, i);
+        for(size_t j = 0; j < matrix->row; j++) {
+            sumarray[i] += temp[j];
+        }
+    }
+    return sumarray;
+}
+
 #endif
