@@ -80,8 +80,9 @@ void zeros(Matrix * matrix) {
 void mprint(Matrix * matrix) {
     for(int i = 0; i < matrix->row; i++) {
         for(int j = 0; j < matrix->col; j++) {
-            printf("%f\n", matrix->data[i][j]);
+            printf("%f ", matrix->data[i][j]);
         }
+        printf("\n");
     }
 }
 
@@ -156,6 +157,38 @@ float * col(Matrix * matrix, int col) {
 }
 
 /**
+ * Function: rowcol
+ * -----------------
+ * Retrieve a specific col and row from matrix
+ * 
+ * matrix: Matrix
+ * col: col number
+ * row: row number
+ * 
+ * returns: colrow value
+ */
+float rowcol(Matrix * matrix, int col, int row) {
+    if (matrix->col < col || matrix->row < row) {
+        perror("Invalid index number");
+    }
+
+    return matrix->data[row][col];
+}
+
+/**
+ * Function: length
+ * -----------------
+ * retrieve full matrix dimension
+ * 
+ * matrix: Matrix
+ * 
+ * returns: matrix dimension (row * col)
+ */
+int length(Matrix * matrix) {
+    return matrix->col * matrix->row;
+}
+
+/**
  * Function: arange
  * -----------------
  * Generate set of values ​​within a defined range
@@ -181,6 +214,67 @@ float * arange(int start, int end, int step) {
         idx += 1;
     }
     return marange;
+}
+
+/**
+ * Function: sdiagonal
+ * -----------------
+ * walk through the full diagonals of the matrix
+ * 
+ * matrix: Matrix
+ * reverse: flag to indicate if the slide should be done in reverse
+ * 
+ * returns: Generated matrix
+ */
+Matrix * sdiagonal(Matrix * matrix) {
+    float ** mdiagonal = (float **) malloc(sizeof(float) * (matrix->row));
+
+    for(size_t i = 0; i < matrix->row; i++) {
+        mdiagonal[i] = (float *) malloc(sizeof(float) * matrix->col - 3);
+        for(size_t j = 0; j < matrix->col - 3; j++) {     
+            mdiagonal[i][j] = matrix->data[i][i+j]; 
+        }
+    }
+
+    Matrix * mm = (Matrix*) malloc(sizeof(Matrix));
+    mm->data = mdiagonal;
+    mm->col = matrix->col - 3;
+    mm->row = matrix->row;
+
+    return mm;
+}
+
+/**
+ * Function: sdiagonalreverse
+ * -----------------
+ * walk through the full diagonals of the matrix (In reverse mode)
+ * 
+ * matrix: Matrix
+ * reverse: flag to indicate if the slide should be done in reverse
+ * 
+ * returns: Generated matrix
+ */
+Matrix * sdiagonalreverse(Matrix * matrix) {
+    // Configure the reverse
+    size_t colindex;
+
+    float ** mdiagonal = (float **) malloc(sizeof(float) * (matrix->row));
+
+    for(size_t i = 0; i < matrix->row; i++) {
+        mdiagonal[i] = (float *) malloc(sizeof(float) * matrix->col - 3);
+        colindex = 0;
+        for(size_t j = matrix->col; j > 3; j--) {
+            mdiagonal[i][colindex] = matrix->data[i][j - (i + 1)]; 
+            colindex += 1;
+        }
+    }
+
+    Matrix * mm = (Matrix*) malloc(sizeof(Matrix));
+    mm->data = mdiagonal;
+    mm->col = matrix->col - 3;
+    mm->row = matrix->row;
+
+    return mm;
 }
 
 #endif
