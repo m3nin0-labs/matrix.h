@@ -278,7 +278,7 @@ Matrix * sdiagonalreverse(Matrix * matrix) {
 }
 
 /**
- * Function: sum
+ * Function: msum
  * -----------------
  * sum all elements of each column
  * 
