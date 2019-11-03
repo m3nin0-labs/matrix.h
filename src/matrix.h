@@ -299,4 +299,40 @@ float * msum(Matrix * matrix) {
     return sumarray;
 }
 
+/**
+ * Function: mcolcat
+ * -----------------
+ * concatenate to matrix columns
+ * 
+ * matrix: Matrix
+ * 
+ * returns: Generated matrix
+ */
+Matrix * mcolcat(Matrix * m1, Matrix * m2) {
+    if (m1->col != m2->col) {
+        perror("Columns must match for mcolcat");
+        return NULL;
+    }
+    if (m1->row != m2->row)
+        perror("Matrix have different row quantities. Concatenation will only be done at equivalent row positions");
+    
+    size_t colindex = 0;
+    size_t ncolsize = m1->col + m2->col; // new column dimension
+
+    Matrix * pmatrix = m1;
+    Matrix * nmatrix = m(m1->row, ncolsize);
+
+    for(size_t i = 0; i < ncolsize; i++){
+        for(size_t j = 0; j < m1->row; j++) 
+            nmatrix->data[j][i] = pmatrix->data[j][i - colindex];
+
+        // Change matrix reference
+        if (i == m1->col-1 && colindex == 0) {
+            pmatrix = m2;
+            colindex = i+1;
+        }
+    }
+    return nmatrix;
+}
+
 #endif
