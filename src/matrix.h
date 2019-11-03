@@ -304,11 +304,13 @@ float * msum(Matrix * matrix) {
  * -----------------
  * concatenate to matrix columns
  * 
- * matrix: Matrix
+ * m1: Matrix
+ * m2: Matrix
+ * colstarts: Index where concatenation of the second matrix should begin
  * 
  * returns: Generated matrix
  */
-Matrix * mcolcat(Matrix * m1, Matrix * m2) {
+Matrix * mcolcat(Matrix * m1, Matrix * m2, int colstarts) {
     if (m1->col != m2->col) {
         perror("Columns must match for mcolcat");
         return NULL;
@@ -317,7 +319,7 @@ Matrix * mcolcat(Matrix * m1, Matrix * m2) {
         perror("Matrix have different row quantities. Concatenation will only be done at equivalent row positions");
     
     size_t colindex = 0;
-    size_t ncolsize = m1->col + m2->col; // new column dimension
+    size_t ncolsize = m1->col + m2->col - colstarts; // new column dimension
 
     Matrix * pmatrix = m1;
     Matrix * nmatrix = m(m1->row, ncolsize);
