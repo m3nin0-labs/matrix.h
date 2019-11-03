@@ -286,7 +286,7 @@ Matrix * sdiagonalreverse(Matrix * matrix) {
  * 
  * returns: vector with each column sum
  */
-float * msum(Matrix * matrix) {
+Matrix * msum(Matrix * matrix) {
     float * temp;
     float * sumarray = (float *) malloc(sizeof(float) * matrix->col);
 
@@ -296,7 +296,10 @@ float * msum(Matrix * matrix) {
             sumarray[i] += temp[j];
         }
     }
-    return sumarray;
+    Matrix * mm = m(1, matrix->col);
+    mm->data[0] = sumarray;
+
+    return mm;
 }
 
 /**
