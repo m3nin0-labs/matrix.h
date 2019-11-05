@@ -263,6 +263,8 @@ Matrix * sdiagonalreverse(Matrix * matrix) {
     for(size_t i = 0; i < matrix->row; i++) {
         mdiagonal[i] = (float *) malloc(sizeof(float) * matrix->col - 3);
         colindex = 0;
+
+        // The last three columns are not considered because they do not have all the rows.
         for(size_t j = matrix->col; j > 3; j--) {
             mdiagonal[i][colindex] = matrix->data[i][j - (i + 1)]; 
             colindex += 1;
