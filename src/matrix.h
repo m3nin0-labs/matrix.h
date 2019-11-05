@@ -278,7 +278,7 @@ Matrix * sdiagonalreverse(Matrix * matrix) {
 }
 
 /**
- * Function: msum
+ * Function: colsum
  * -----------------
  * sum all elements of each column
  * 
@@ -286,7 +286,7 @@ Matrix * sdiagonalreverse(Matrix * matrix) {
  * 
  * returns: vector with each column sum
  */
-Matrix * msum(Matrix * matrix) {
+Matrix * colsum(Matrix * matrix) {
     float * temp;
     float * sumarray = (float *) malloc(sizeof(float) * matrix->col);
 
@@ -300,6 +300,50 @@ Matrix * msum(Matrix * matrix) {
     mm->data[0] = sumarray;
 
     return mm;
+}
+
+/**
+ * Function: rowcolsum
+ * -----------------
+ * sum all elements of each row and col
+ * 
+ * matrix: Matrix
+ * 
+ * returns: float number
+ */
+float rowcolsum(Matrix * m1) {
+    float temparr = 0;
+    for(size_t j = 0; j < m1->col; j++) {
+        for(size_t i = 0; i < m1->row; i++) {
+            temparr += m1->data[i][j];
+        }
+    }
+    return temparr;
+}
+
+/**
+ * Function: matmul
+ * -----------------
+ * Function to element-wise matrix sum
+ * 
+ * m1: Matrix
+ * m2: Matrix
+ * 
+ * returns: An matrix
+ */
+Matrix * matsum(Matrix * m1, Matrix * m2) {
+    if (m1->col != m2->col || m1->col != m2->col) {
+        perror("Matrix dimensions must be the same for matsum");
+        return NULL;
+    }
+    Matrix * resultMatrix = m(m1->row, m1->col);
+    
+    for(int i = 0; i < m1->row; i++) {
+        for(int j = 0; j < m1->col; j++) {
+            resultMatrix->data[i][j] = m1->data[i][j] + m2->data[i][j];
+        }
+    }
+    return resultMatrix;
 }
 
 /**
