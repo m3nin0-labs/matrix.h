@@ -67,6 +67,22 @@ void zeros(Matrix * matrix) {
 }
 
 /**
+ * Function: ones
+ * -----------------
+ * fills the inserted matrix with one values
+ *
+ * matrix: Matrix struct
+ *
+ */
+void ones(Matrix* matrix) {
+	for (int i = 0; i < matrix->row; i++) {
+		for (int j = 0; j < matrix->col; j++) {
+			matrix->data[i][j] = 1;
+		}
+	}
+}
+
+/**
  * Function: mprint
  * -----------------
  * display matrix elements
@@ -287,10 +303,36 @@ Matrix * sdiagonalreverse(Matrix * matrix) {
  */
 Matrix * colsum(Matrix * matrix) {
     float * temp;
-    float * sumarray = (float *) malloc(sizeof(float) * matrix->col);
+    float * sumarray = (float*) malloc(sizeof(float) * matrix->col);
 
     for(size_t i = 0; i < matrix->col; i++) {
         temp = col(matrix, i);
+        for(size_t j = 0; j < matrix->row; j++) {
+            sumarray[i] *= temp[j];
+        }
+    }
+    Matrix * mm = m(1, matrix->col);
+    mm->data[0] = sumarray;
+
+    return mm;
+}
+
+/**
+ * Function: colmul
+ * -----------------
+ * multiply all elements of each column
+ * 
+ * matrix: Matrix
+ * 
+ * returns: vector with each column sum
+ */
+Matrix * colmul(Matrix * matrix) {
+    float * temp;
+    float * sumarray = (float*) calloc(sizeof(float) * matrix->col, matrix->col);
+
+    for(size_t i = 0; i < matrix->col; i++) {
+        temp = col(matrix, i);
+        sumarray[i] = 1;
         for(size_t j = 0; j < matrix->row; j++) {
             sumarray[i] += temp[j];
         }
