@@ -303,7 +303,7 @@ Matrix * sdiagonalreverse(Matrix * matrix) {
  */
 Matrix * colsum(Matrix * matrix) {
     float * temp;
-    float * sumarray = (float*) malloc(sizeof(float) * matrix->col);
+    float * sumarray = (float*) calloc(sizeof(float) * matrix->col, matrix->col);
 
     for(size_t i = 0; i < matrix->col; i++) {
         temp = col(matrix, i);
@@ -328,7 +328,7 @@ Matrix * colsum(Matrix * matrix) {
  */
 Matrix * colmul(Matrix * matrix) {
     float * temp;
-    float * sumarray = (float*) calloc(sizeof(float) * matrix->col, matrix->col);
+    float * sumarray = (float*) malloc(sizeof(float) * matrix->col);
 
     for(size_t i = 0; i < matrix->col; i++) {
         temp = col(matrix, i);
