@@ -1,9 +1,6 @@
 #ifndef MATRIX_HEADER
 #define MATRIX_HEADER
 
-#include <stdlib.h>
-#include <malloc.h>
-
 typedef struct aux {
     float** data;
     int col, row;
